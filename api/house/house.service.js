@@ -71,26 +71,27 @@ async function add(house) {
 
 
 function _buildCriteria(filterBy) {
-
     const criteria = {};
-    console.log('filterBy:',filterBy)
     //search filter
-if(filterBy.location)
-    criteria['location.name'] = { $regex: new RegExp(filterBy.location, 'i') };
+    if (filterBy.location)
+        criteria['location.name'] = { $regex: new RegExp(filterBy.location, 'i') };
 
     //capacity filter
     var visitors = 0;
-    if (filterBy.adultNumber){
+    if (filterBy.adultNumber) {
         visitors += +filterBy.adultNumber;
-        console.log('test1')
-    } 
-    if (filterBy.childrenNumber){
+    }
+    if (filterBy.childrenNumber) {
         visitors += +filterBy.childrenNumber;
-        console.log('test2')
-    } 
-    console.log('visitors:',visitors)
+    }
     criteria.capacity = { $gte: visitors }
-    console.log('criteria[location.name]', criteria);
+
+    //type: entire house suggestion from homepage
+    if (filterBy.type) {
+        criteria.type = { $regex: new RegExp('entire apartment|entire house|entire villa|entire loft', 'i') };
+    }
+    //top rating filter suggestion from homepage
+    if (filterBy.rating) criteria['scores.rating'] = { $gte: +filterBy.rating }
 
     //date picker filter
 
