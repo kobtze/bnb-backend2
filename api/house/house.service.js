@@ -88,7 +88,7 @@ function _buildCriteria(filterBy) {
 
     //type: entire house suggestion from homepage
     if (filterBy.type) {
-        criteria.type = { $regex: new RegExp('entire apartment|entire house|entire villa|entire loft', 'i') };
+        criteria.type = { $regex: new RegExp('entire house|villa', 'i') };
     }
     //top rating filter suggestion from homepage
     if (filterBy.rating) criteria['scores.rating'] = { $gte: +filterBy.rating }
