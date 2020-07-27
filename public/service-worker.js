@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.f262ca3c0eb016dd2929ccd41af6c47d.js"
+  "/precache-manifest.a1bc13438a8cdb7de228bed99b3914d6.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "bed_and_bread"});
