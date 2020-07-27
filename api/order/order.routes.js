@@ -9,9 +9,9 @@ const router = express.Router()
 router.get('/', getOrders)
 router.get('/:id', getOrder)
 router.post('/', addOrder)
-// router.put('/:id', updateOrder)
+router.put('/:id', updateOrder)
 // router.put('/:id',  requireAuth, updateOrder)
-// router.delete('/:id', deleteOrder)
+router.delete('/:id', deleteOrder)
 // router.delete('/:id',  requireAuth, requireAdmin, deleteOrder)
 
 module.exports = router
