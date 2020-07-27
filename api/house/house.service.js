@@ -78,10 +78,10 @@ function _buildCriteria(filterBy) {
 
     //capacity filter
     var visitors = 0;
-    if (filterBy.adultNumber) {
+    if (filterBy.adultNumber !== "ADULTS") {
         visitors += +filterBy.adultNumber;
     }
-    if (filterBy.childrenNumber) {
+    if (filterBy.childrenNumber !== "CHILDREN") {
         visitors += +filterBy.childrenNumber;
     }
     criteria.capacity = { $gte: visitors }
