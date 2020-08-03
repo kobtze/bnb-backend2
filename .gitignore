@@ -2,3 +2,5 @@
 /logs/backend.log
 logs/backend.log
 config/
+/config
+/config/
