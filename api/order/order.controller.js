@@ -7,9 +7,13 @@ async function getOrder(req, res) {
 }
 
 async function getOrders(req, res) {
-    const orders = await orderService.query(req.query)
-    logger.debug(orders);
-    res.send(orders)
+    try {
+        const orders = await orderService.query(req.query)
+        logger.debug(orders);
+        res.send(orders)
+    } catch (err) {
+        res.status(401).send({ Error: err })
+    }
 }
 
 async function deleteOrder(req, res) {

@@ -12,7 +12,7 @@ async function login(req, res) {
         res.json(user)
         console.log('logged in:', user.email);
     } catch (err) {
-        res.status(401).send({ error: err })
+        res.status(401).send({ Error: err })
     }
 }
 

@@ -1,5 +1,7 @@
 const dbService = require('../../services/db.service')
 const ObjectId = require('mongodb').ObjectId
+const _ = require('lodash');
+var isEmpty = require('lodash/isEmpty');
 
 module.exports = {
     query,
@@ -9,8 +11,14 @@ module.exports = {
     add
 }
 
-async function query(filterBy = {}) {
-    const criteria = _buildCriteria(filterBy)
+async function query(reqQuery) {
+    const criteria = _buildCriteria(reqQuery)
+    if (isEmpty(criteria)) return Promise.reject('Bad request!')
+    const orders = await _query(criteria)
+    return orders
+}
+
+async function _query(criteria) {
     const collection = await dbService.getCollection('order')
     try {
         const orders = await collection.find(criteria).toArray();
@@ -57,6 +65,7 @@ async function update(order) {
 
 async function add(order) {
     const collection = await dbService.getCollection('order')
+    order.createdAt = Date.now()
     try {
         await collection.insertOne(order);
         return order;
@@ -66,13 +75,11 @@ async function add(order) {
     }
 }
 
-function _buildCriteria(filterBy) {
-    const criteria = {};
-    if (filterBy.txt) {
-        criteria.ordername = { '$regex': `.*${filterBy.ordername}.*/i` }
-    }
-    if (filterBy.minBalance) {
-        criteria.balance = { $gte: +filterBy.minBalance }
+function _buildCriteria(reqQuery) {
+    const criteria = {}
+    const userId = reqQuery.userId
+    if (userId) {
+        criteria.$or = [{'guest._id' : userId},{'host._id' : userId}]
     }
     return criteria;
 }

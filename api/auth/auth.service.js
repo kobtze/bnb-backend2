@@ -19,8 +19,9 @@ async function login(email, password) {
 
 async function signup(email, password) {
     logger.debug(`auth.service - signup with email: ${email}`)
-    if (!email || !password) return Promise.reject('email and password are required!')
-
+    if (!email || !password) return Promise.reject('Email and password are required!')
+    const user = await userService.getByEmail(email)
+    if (email === user.email) return Promise.reject('Email is already associated with account')
     const hash = await bcrypt.hash(password, saltRounds)
     return userService.add({ email, password: hash })
 }
