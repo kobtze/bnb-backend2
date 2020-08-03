@@ -1,4 +1,4 @@
 /node_modules
 /logs/backend.log
 logs/backend.log
-/config
+config/
